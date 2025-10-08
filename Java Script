@@ -1,0 +1,27 @@
+document.getElementById("formAgendamento").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const dados = {
+    nome: event.target.nome.value,
+    telefone: event.target.telefone.value,
+    data: event.target.data.value,
+    servico: event.target.servico.value
+  };
+
+  fetch('backend/inserir_agendamento.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(dados)
+  })
+  .then(response => response.text())
+  .then(msg => {
+    alert(msg);
+    event.target.reset();
+  })
+  .catch(err => {
+    console.error(err);
+    alert('Erro ao enviar agendamento.');
+  });
+});
